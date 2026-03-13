@@ -1,117 +1,141 @@
-What is express?
-Why should we use it?
+# Express.js and REST API Notes 🚀
 
-Express is a minimal node.js framework with high level abstraction. It is built on top of node.
-Express allows for the faster development of node applications. Express makes it easy to organize our application in MVC architecter.
+## What is Express? ⚡
 
-Features :
+Express is a minimal **Node.js framework** with high-level abstraction. It is built on top of Node.js.
 
-- Complex Routing
-- Easier handling of requests and responses
-- middleware
-- server side rendering...
+Express allows for **faster development of Node applications** and makes it easy to organize applications in an **MVC architecture**.
 
-What is an API? (Application Programming Interface)
-It is a piece of software that is used by another piece of software in order to allow applications to talk to each other.
-Simple example (Restaurant example)
+**Features:**
+- 🛣 Complex routing
+- 📬 Easier handling of requests and responses
+- 🧩 Middleware
+- 🌐 Server-side rendering
 
-Imagine a restaurant:
+---
 
-👩 You = the customer
+## What is an API? (Application Programming Interface) 🔗
 
-🧑‍🍳 Kitchen = the system / program
+An API is a piece of software that is used by another piece of software to allow applications to **communicate with each other**.
 
-🧑‍💼 Waiter = the API
+**Simple example (Restaurant analogy):**
+- 👩 **You** = the customer
+- 🧑‍🍳 **Kitchen** = the system/program
+- 🧑‍💼 **Waiter** = the API
 
-In programming
+**In programming:**  
+An API allows one application to **request data or services** from another application.
 
-An API allows:
+---
 
-One application
+## What is a Web API? 🌍
 
-To request data or service
+A **Web API** is simply an API that works over the internet.  
+It allows **web applications to communicate with servers using HTTP**.
 
-From another application
-
-What is a Web API?
-A Web API is simply an API that works over the internet.
-
-It allows web applications to communicate with servers using HTTP.
-
-common styles (ways) to Build APIs :
-
-- REST API (Most Popular)
+**Common styles to build APIs:**
+- REST API (most popular)
 - SOAP API
 - GraphQL API
 
-What is REST(Representational State Transfer) API?
-EST is a way of designing APIs using simple URLs and HTTP methods.
+---
 
-The 4 Main REST Methods:
-GET Get data
-POST Create data
-PUT/PATCH Update data
-DELETE Delete data
+## What is a REST (Representational State Transfer) API? 📝
 
-Practical REST design principles:
-REST principles are the rules or guidelines that make a REST API simple, organized, and easy to use.
-There are 6 main REST principles.
+REST is a way of designing APIs using **simple URLs** and **HTTP methods**.
 
-1️⃣ Separate API into Logical Resources
+**The 4 main REST methods:**
+| Method | Action |
+|--------|------------|
+| GET | Get data |
+| POST | Create data |
+| PUT/PATCH | Update data |
+| DELETE | Delete data |
 
-In REST, we organize data into resources.
-Instead of mixing everything in one endpoint, the API is divided into logical resources such as users, products, or orders.
+---
 
-2️⃣ Use Resource-Based URLs
+## Practical REST Design Principles ✅
 
-URLs should describe what the resource is, not what action to perform.
-A resource is usually a noun, such as users, not an action.
+REST principles make an API **simple, organized, and easy to use**.
 
-Example:
-/users ✔
-/getUsers ❌
+### 1️⃣ Separate API into Logical Resources
+- Organize data into resources like users, products, or orders.
+- Avoid mixing everything in one endpoint.
 
-3️⃣ Use HTTP Methods to Show Actions (Verbs)
+### 2️⃣ Use Resource-Based URLs
+- URLs should describe **what the resource is**, not the action.
+- Example:
+  - `/users` ✔
+  - `/getUsers` ❌
 
-REST APIs use HTTP methods (verbs) such as GET, POST, PUT, PATCH, and DELETE to tell the server what action to perform on a resource.
+### 3️⃣ Use HTTP Methods to Show Actions (Verbs)
+- Use HTTP methods to indicate the action:
+  - **GET** → retrieve data  
+  - **POST** → create data  
+  - **PUT/PATCH** → update data  
+  - **DELETE** → remove data
 
-Example:
-GET → retrieve data
-POST → create data
-PUT/PATCH → update data
-DELETE → remove data
+### 4️⃣ Send and Receive Data as JSON
+- REST APIs usually use **JSON format** because it’s lightweight and easy to process.
 
-4️⃣ Send and Receive Data as JSON
+### 5️⃣ Stateless
+- Every request must contain all necessary information.  
+- The server does **not remember previous requests**; each request is independent.
 
-REST APIs usually send and receive data in JSON format because it is simple, lightweight, and easy for applications to read and process.
+---
 
-5️⃣ Stateless
+## REST API URL Structure and HTTP Methods 🌐
 
-REST APIs are stateless, which means every request must contain all the information needed for the server to process it.
-The server does not remember previous requests, so each request is independent.
+**Base URL:**  
+`https://www.something.com`
 
-REST API URL Structure and HTTP Methods
+| Action                   | Method    | Endpoint                          |
+| ------------------------ | --------- | --------------------------------- |
+| Create a resource        | POST      | `/resource_name`                  |
+| Read all resources       | GET       | `/resource_name`                  |
+| Read a specific resource | GET       | `/resource_name/{id}`             |
+| Update a resource        | PUT/PATCH | `/resource_name/{id}`             |
+| Delete a resource        | DELETE    | `/resource_name/{id}`             |
+| Get related resource     | GET       | `/resource_name/{id}/resource_name` |
 
-Base URL
-https://www.something.com/endpoint_name
+---
 
-## Action Method Endpoint
+## What is JSON (JavaScript Object Notation)? 🗂
 
-Create a resource POST /resource_name
+- JSON is a **clean, readable way to send data** from one place to another.
+- JSON keys should **always be strings**.
 
-Read all resources GET /resource_name
+---
 
-Read a specific resource GET /resource_name/{id}
+## What is JSend? 📦
 
-Update a resource PUT / PATCH /resource_name/{id}
+- JSend is a **standard for formatting JSON responses**.
+- It has **three types of responses**:
+  - `success`
+  - `fail`
+  - `error`
 
-Delete a resource DELETE /resource_name/{id}
+---
 
-Get related resource GET /resource_name/{id}/resource_name
+## What is Middleware? 🧩
 
-What is JSON (Javascript Object Notation)?
-It is a clean, readable way to send data from one place to another.
-It's keys should always be strings.
+Middleware is like a **helper function** that runs **between the request and the response**.  
 
-What is Jsend?
-For formatting a JSON response we are using JSend to standardize the response.It has 3 types of response: success, fail, error.
+Think of it as a **stop on the way** where Express can do something with the request before sending the response.
+
+**In easy words:**
+- Middleware takes `req` and `res` (the request and response)
+- Does something (like logging, checking authentication, or parsing data)
+- Then either **passes control to the next middleware/route** or sends a response
+
+**Everything is middleware in Express**  
+- Routes, built-in functions, and custom helpers are all treated as middleware in Express.
+
+**Middleware stack**
+- Middleware functions are executed **in order — one after another**.
+- Think of them as a **stack of tasks**.
+- Each middleware does something, then passes control to the next one using `next()`.
+
+**Using middleware in Express**
+- Use **`app.use()`** for global middleware
+- Pass middleware **directly to a route** for route-specific tasks
