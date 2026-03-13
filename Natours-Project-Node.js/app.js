@@ -3,6 +3,7 @@ const fs = require('fs');
 const app = express();
 
 //when doing a post request, we need this middleware to be able to read the body of the request and parse it into a JavaScript object
+// JSON body parser middleware:
 app.use(express.json());
 
 //get,post,patch,delete are http methods, '/api/v1/tours' is called route, (req, res) => {} is the route handler function that will be executed when a request is made to this route.
@@ -63,13 +64,12 @@ const deleteTour = (req, res) => {
 };
 
 //Routes
-app.get('/api/v1/tours', getAllTours);
-//:id is a placeholder for the actual id of the tour that we want to get. We can access this id using req.params.id
-app.get('/api/v1/tours/:id', getTour);
-app.post('/api/v1/tours', createTour);
-//PUT updates the whole resource but patch only updates the fields that we want to update.
-app.patch('/api/v1/tours/:id', updateTour);
-app.delete('/api/v1/tours/:id', deleteTour);
+app.route('/api/v1/tours').get(getAllTours).post(createTour);
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 const port = 3000;
 app.listen(port, () => {
