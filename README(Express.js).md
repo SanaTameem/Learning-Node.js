@@ -195,3 +195,32 @@ There are **four main types of middleware**:
 5. **Error-handling middleware** (defined last)
 
 > ⚡ **Tip:** Middleware runs **in the order it is defined**, top to bottom.
+
+## Environment Variables in Node.js / Express.js
+
+**Environment Variables** are like secret notes you give to your app from the outside.  
+They tell your app important information **without hardcoding it in your code**.
+
+### Why use Environment Variables?
+
+- Keep secrets safe (passwords, API keys)
+- Easily change settings for different environments (development, testing, production)
+- Avoid hardcoding values in your code
+
+### How to use them
+
+1. Create a file called `.env` (this file should **not** be uploaded to GitHub).
+2. Add your environment variables inside `.env`:
+
+```env
+PORT=3000
+DATABASE_PASSWORD=mysecretpassword
+API_KEY=12345
+```
+
+In your Node.js app, read them using `process.env`:
+
+```
+const port = process.env.PORT || 3000; // use environment variable PORT, or 3000 if not set
+console.log(process.env.DATABASE_PASSWORD);
+```
