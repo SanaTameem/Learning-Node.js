@@ -1,10 +1,27 @@
-const express = require('express');
 const fs = require('fs');
+const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
 
+// Third Party middleware :
+//morgan is a middleware that logs the details of the request and response in the console.
+app.use(morgan('dev'));
+
+// Built-in Express middleware :
 //when doing a post request, we need this middleware to be able to read the body of the request and parse it into a JavaScript object
 // JSON body parser middleware:
 app.use(express.json());
+
+//My custom middleware :
+// If our middlware comes before the route handler funtions it will be applied to all but If our middlware comes after the route handler function, it will not be executed.
+app.use((req, res, next) => {
+  console.log('Hello from Middleware....');
+  console.log(`Request Method: ${req.method}`);
+  console.log(`Request Time: ${new Date().toISOString()}`);
+  //this next function is used to pass the control to the next middleware function in the stack, if we don't call next() the request will be stuck and will not be able to reach the route handler function.
+  next();
+});
 
 //get,post,patch,delete are http methods, '/api/v1/tours' is called route, (req, res) => {} is the route handler function that will be executed when a request is made to this route.
 
@@ -63,6 +80,28 @@ const deleteTour = (req, res) => {
   res.status(204).json({ status: 'success', data: null });
 };
 
+
+const getAllUsers = (req, res) =>{
+  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
+}
+
+const getUser = (req, res) =>{
+  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
+}
+
+const createUser = (req, res) =>{
+  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
+}
+
+const updateUser = (req, res) =>{
+  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
+}
+
+const deleteUser = (req, res) =>{
+  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
+}
+
+
 //Routes
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 app
@@ -70,6 +109,9 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+app.route('/api/v1/users').get(getAllUsers).post(createUser);
+app.route('/api/v1/users/:id').get(getUser).patch(updateUser).delete(deleteUser);  
 
 const port = 3000;
 app.listen(port, () => {

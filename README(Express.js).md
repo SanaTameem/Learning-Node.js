@@ -7,6 +7,7 @@ Express is a minimal **Node.js framework** with high-level abstraction. It is bu
 Express allows for **faster development of Node applications** and makes it easy to organize applications in an **MVC architecture**.
 
 **Features:**
+
 - 🛣 Complex routing
 - 📬 Easier handling of requests and responses
 - 🧩 Middleware
@@ -19,6 +20,7 @@ Express allows for **faster development of Node applications** and makes it easy
 An API is a piece of software that is used by another piece of software to allow applications to **communicate with each other**.
 
 **Simple example (Restaurant analogy):**
+
 - 👩 **You** = the customer
 - 🧑‍🍳 **Kitchen** = the system/program
 - 🧑‍💼 **Waiter** = the API
@@ -34,6 +36,7 @@ A **Web API** is simply an API that works over the internet.
 It allows **web applications to communicate with servers using HTTP**.
 
 **Common styles to build APIs:**
+
 - REST API (most popular)
 - SOAP API
 - GraphQL API
@@ -59,27 +62,32 @@ REST is a way of designing APIs using **simple URLs** and **HTTP methods**.
 REST principles make an API **simple, organized, and easy to use**.
 
 ### 1️⃣ Separate API into Logical Resources
+
 - Organize data into resources like users, products, or orders.
 - Avoid mixing everything in one endpoint.
 
 ### 2️⃣ Use Resource-Based URLs
+
 - URLs should describe **what the resource is**, not the action.
 - Example:
   - `/users` ✔
   - `/getUsers` ❌
 
 ### 3️⃣ Use HTTP Methods to Show Actions (Verbs)
+
 - Use HTTP methods to indicate the action:
-  - **GET** → retrieve data  
-  - **POST** → create data  
-  - **PUT/PATCH** → update data  
+  - **GET** → retrieve data
+  - **POST** → create data
+  - **PUT/PATCH** → update data
   - **DELETE** → remove data
 
 ### 4️⃣ Send and Receive Data as JSON
+
 - REST APIs usually use **JSON format** because it’s lightweight and easy to process.
 
 ### 5️⃣ Stateless
-- Every request must contain all necessary information.  
+
+- Every request must contain all necessary information.
 - The server does **not remember previous requests**; each request is independent.
 
 ---
@@ -89,13 +97,13 @@ REST principles make an API **simple, organized, and easy to use**.
 **Base URL:**  
 `https://www.something.com`
 
-| Action                   | Method    | Endpoint                          |
-| ------------------------ | --------- | --------------------------------- |
-| Create a resource        | POST      | `/resource_name`                  |
-| Read all resources       | GET       | `/resource_name`                  |
-| Read a specific resource | GET       | `/resource_name/{id}`             |
-| Update a resource        | PUT/PATCH | `/resource_name/{id}`             |
-| Delete a resource        | DELETE    | `/resource_name/{id}`             |
+| Action                   | Method    | Endpoint                            |
+| ------------------------ | --------- | ----------------------------------- |
+| Create a resource        | POST      | `/resource_name`                    |
+| Read all resources       | GET       | `/resource_name`                    |
+| Read a specific resource | GET       | `/resource_name/{id}`               |
+| Update a resource        | PUT/PATCH | `/resource_name/{id}`               |
+| Delete a resource        | DELETE    | `/resource_name/{id}`               |
 | Get related resource     | GET       | `/resource_name/{id}/resource_name` |
 
 ---
@@ -119,23 +127,71 @@ REST principles make an API **simple, organized, and easy to use**.
 
 ## What is Middleware? 🧩
 
-Middleware is like a **helper function** that runs **between the request and the response**.  
+Middleware is like a **helper function** that runs **between the request and the response**.
 
 Think of it as a **stop on the way** where Express can do something with the request before sending the response.
 
 **In easy words:**
+
 - Middleware takes `req` and `res` (the request and response)
 - Does something (like logging, checking authentication, or parsing data)
 - Then either **passes control to the next middleware/route** or sends a response
 
-**Everything is middleware in Express**  
+**Everything is middleware in Express**
+
 - Routes, built-in functions, and custom helpers are all treated as middleware in Express.
 
 **Middleware stack**
+
 - Middleware functions are executed **in order — one after another**.
 - Think of them as a **stack of tasks**.
 - Each middleware does something, then passes control to the next one using `next()`.
 
 **Using middleware in Express**
+
 - Use **`app.use()`** for global middleware
 - Pass middleware **directly to a route** for route-specific tasks
+
+## Types of Middleware in Express.js
+
+There are **four main types of middleware**:
+
+1️⃣ **Application-level middleware**
+
+- Defined using `app.use()` or `app.METHOD()`
+- Runs for all or specific routes
+
+2️⃣ **Router-level middleware**
+
+- Applied to specific routers using `express.Router()`
+- Useful for modularizing routes
+
+3️⃣ **Built-in middleware**
+
+- Provided by Express itself
+- Examples:
+  - `express.json()` → parse JSON body
+  - `express.urlencoded()` → parse URL-encoded form data
+  - `express.static()` → serve static files
+
+4️⃣ **Third-party middleware**
+
+- Middleware from npm packages
+- Examples:
+  - `morgan` → request logger
+  - `cors` → enable CORS
+  - `cookie-parser` → parse cookies
+
+---
+
+## Middleware Order in Express.js 🚦
+
+**Recommended order for your app:**
+
+1. **Built-in middleware** (e.g., `express.json()`)
+2. **Custom middleware** (e.g., logging, request time)
+3. **Third-party middleware** (e.g., `morgan`, `cors`)
+4. **Route handlers / Routers** (`app.route()` or `app.get/post/...`)
+5. **Error-handling middleware** (defined last)
+
+> ⚡ **Tip:** Middleware runs **in the order it is defined**, top to bottom.
