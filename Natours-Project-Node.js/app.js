@@ -80,38 +80,57 @@ const deleteTour = (req, res) => {
   res.status(204).json({ status: 'success', data: null });
 };
 
+const getAllUsers = (req, res) => {
+  res
+    .status(500)
+    .json({ status: 'error', message: 'This route is not yet been defined' });
+};
 
-const getAllUsers = (req, res) =>{
-  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
-}
+const getUser = (req, res) => {
+  res
+    .status(500)
+    .json({ status: 'error', message: 'This route is not yet been defined' });
+};
 
-const getUser = (req, res) =>{
-  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
-}
+const createUser = (req, res) => {
+  res
+    .status(500)
+    .json({ status: 'error', message: 'This route is not yet been defined' });
+};
 
-const createUser = (req, res) =>{
-  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
-}
+const updateUser = (req, res) => {
+  res
+    .status(500)
+    .json({ status: 'error', message: 'This route is not yet been defined' });
+};
 
-const updateUser = (req, res) =>{
-  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
-}
+const deleteUser = (req, res) => {
+  res
+    .status(500)
+    .json({ status: 'error', message: 'This route is not yet been defined' });
+};
 
-const deleteUser = (req, res) =>{
-  res.status(500).json({ status: 'error', message: 'This route is not yet been defined' });
-}
+//
+// Step 1(Routers): Create routers using express.Router()
+// - First, we create a mini app (router) for each group of related routes.
+//   In this case, tourRouter for "tours" and userRouter for "users".
+const tourRouter = express.Router();
+const userRouter = express.Router();
 
+// Step 2( Mount routes to routers): Attach route handlers to the routers
+// - Next, we define what happens for each HTTP method (GET, POST, PATCH, DELETE) on each route.
+// - For example, tourRouter handles routes like '/' for all tours and '/:id' for a specific tour.
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
-//Routes
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
-app.route('/api/v1/users/:id').get(getUser).patch(updateUser).delete(deleteUser);  
+// Step 3: Mount routers to the main app
+// - Finally, we connect each router to a base path in the main Express app.
+// - All routes defined in a router become available under that base path.
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 const port = 3000;
 app.listen(port, () => {
