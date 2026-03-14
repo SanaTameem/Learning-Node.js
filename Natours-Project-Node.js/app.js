@@ -5,9 +5,12 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
-//Serving static files like html, css, images, etc. from the public folder.
+// Serving static files like html, css, images, etc. from the public folder.
 app.use(express.static(`${__dirname}/public`));
 app.use((req, res, next) => {
   console.log('Hello from Middleware....😊');
